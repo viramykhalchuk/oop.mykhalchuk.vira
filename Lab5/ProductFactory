@@ -1,0 +1,15 @@
+#pragma once
+#include "Product.h"
+#include "IoCContainer.h"
+
+class ProductFactory {
+private:
+    IoCContainer& container;
+public:
+    ProductFactory(IoCContainer& container) : container(container) {}
+
+    Product createProduct(const std::string& name, double weight) {
+        PriceStrategy* pricingStrategy = container.resolve<PriceStrategy>(name);
+        return Product(name, weight, pricingStrategy);
+    }
+};
